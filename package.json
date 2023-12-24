@@ -1,5 +1,5 @@
 {
-  "name": "binning",
+  "name": "@enercon-open-source/binning",
   "version": "0.0.0",
   "description": "binning",
   "type": "module",
@@ -14,5 +14,13 @@
   },
   "keywords": [],
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enercon-open-source/binning.git"
+  },
+  "bugs": {
+    "url": "https://github.com/enercon-open-source/binning/issues"
+  },
+  "homepage": "https://github.com/enercon-open-source/binning#readme"
 }
