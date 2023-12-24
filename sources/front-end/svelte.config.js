@@ -1,4 +1,5 @@
 import adapter from '@sveltejs/adapter-node';
+
 // import {
 //   PUBLIC_WS_PROTO,
 //   PUBLIC_WS_HOST,
@@ -10,6 +11,7 @@ import adapter from '@sveltejs/adapter-node';
 //   PUBLIC_WEB_DEBUG_PORT,
 // } from '$env/static/public';
 //
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
