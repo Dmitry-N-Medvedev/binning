@@ -52,7 +52,7 @@
 
     height: 100%;
 
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   #section-binning-settings {
