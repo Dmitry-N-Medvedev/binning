@@ -23,28 +23,37 @@
   div {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 4rem 1fr 4rem;
+    grid-template-rows: auto 1fr auto;
     grid-template-areas:
       'header'
       'main'
       'footer'
     ;
-
+    gap: 1rem;
+  
     min-height: 100svh;
+    max-height: 100svh;
   }
   header {
     grid-area: header;
     display: flex;
     justify-content: center;
     align-items: center;
+    top: 0;
   }
 
   main {
     grid-area: main;
+    overflow: hidden;
   }
 
   footer {
     grid-area: footer;
+    bottom: 0;
+  }
+
+  header, footer {
+    position: sticky;
   }
 </style>
 

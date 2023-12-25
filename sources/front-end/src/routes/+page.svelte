@@ -14,15 +14,45 @@
       'jobs settings'
       'jobs statistics'
     ;
-    height: 100%;
     width: 50svw;
     margin: 0 auto;
-  
+    height: 100%;
   }
 
   #section-jobs {
     grid-area: jobs;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content;
+    grid-template-areas:
+      'job-list-header'
+      'job-list-items'
+    ;
+    gap: 0.5rem;
+    overflow: hidden;
+
     background-color: var(--theme-black);
+  }
+
+  #section-jobs > #job-list-header {
+    grid-area: job-list-header;
+
+    height: 8rem;
+
+    background-color: yellowgreen;
+  }
+
+  #section-jobs > #job-list-items {
+    grid-area: job-list-items;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content;
+    gap: 0.5rem;
+
+    height: 100%;
+
+    overflow-y: scroll;
   }
 
   #section-binning-settings {
@@ -38,7 +68,10 @@
 
 <article>
   <section id="section-jobs">
-    <Jobs />
+    <div id="job-list-header">jobs header</div>
+    <div id="job-list-items">
+      <Jobs />
+    </div>
   </section>
   <section id="section-binning-settings">
     <BinningSettings />
