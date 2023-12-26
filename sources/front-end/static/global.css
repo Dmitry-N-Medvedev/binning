@@ -81,3 +81,8 @@ h4 {
 h5 {
   font-size: 2rem;
 }
+
+svg {
+  pointer-events: none !important;
+  user-select: none !important;
+}

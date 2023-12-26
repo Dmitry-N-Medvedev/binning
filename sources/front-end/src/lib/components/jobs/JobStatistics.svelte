@@ -10,6 +10,7 @@
 </script>
 <style>
   .job-statistics-concise {
+    grid-area: job-statistics;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-flow: row;
@@ -19,33 +20,26 @@
   }
 
   .value {
-    aspect-ratio: 3 / 1;
+    container-type: inline-size;
+    /* aspect-ratio: 3 / 1; */
   }
 </style>
 
 <div class="job-statistics-concise">
-  <div class="value">
     <StatValueCtl
       value="{ctValue}"
       hint="created at"
     />
-  </div> 
-  <div class="value">
     <StatValueCtl
       value="{recordsNum}"
       hint="num of records"
     />
-  </div> 
-  <div class="value">
     <StatValueCtl
       value="{rps}"
       hint="records/sec"
     />
-  </div> 
-  <div class="value">
     <StatValueCtl
       value="{executionTime}"
       hint="execution time"
     />
-  </div> 
 </div>

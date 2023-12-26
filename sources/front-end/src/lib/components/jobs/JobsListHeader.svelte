@@ -1,8 +1,20 @@
 <script>
+  import {
+    Jobs,
+  } from '$lib/stores/jobs.store.mjs';
+
   let {
     jobsTotal = 0,
     jobsRunning = 0,
   } = $props();
+
+  /**
+   * 
+   * @param e {MouseEvent}
+   */
+  function handleAddNewJob(e) {
+    Jobs.newJob();
+  }
 </script>
 
 <style>
@@ -63,7 +75,7 @@
 <div class="jobs-header">
   <h2>jobs</h2>
   <div id="add-new">
-    <button>&#x0002B;</button>
+    <button on:click|stopPropagation|trusted|preventDefault={handleAddNewJob}>&#x0002B;</button>
   </div>
   <div id="jobs-header-statistics">
     {jobsRunning}/{jobsTotal}
