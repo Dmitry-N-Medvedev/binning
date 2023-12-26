@@ -1,36 +1,23 @@
 <script>
-  import {
-    Jobs,
-  } from '$lib/stores/jobs.store.mjs';
-
   let {
-    jobsTotal = 0,
-    jobsRunning = 0,
+    title = 'n/a',
+    stat = null,
+    onButtonClick = () => {},
   } = $props();
-
-  /**
-   * 
-   * @param e {MouseEvent}
-   */
-  function handleAddNewJob(e) {
-    Jobs.newJob();
-  }
 </script>
 
 <style>
-  .jobs-header {
+  .header {
     display: grid;
     grid-template-columns: 5fr 1fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas:
-      'title add-new statistics'
+      'title button stats'
     ;
-    /* max-height: 8rem; */
-    /* padding: 0.25rem 1rem; */
     background-color: var(--theme-blue);
   }
 
-  .jobs-header > h2 {
+  .header > h2 {
     grid-area: title;
     display: flex;
     justify-content: start;
@@ -38,16 +25,16 @@
     color: var(--main-background-color);
     padding-left: 2rem;
   }
-
-  .jobs-header > #add-new {
-    grid-area: add-new;
+  
+  .header > .button-container {
+    grid-area: button;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0.5rem;
   }
 
-  #add-new > button {
+  .button-container > button {
     display: flex;
     flex: 1 0 100%;
     aspect-ratio: 1 / 1;
@@ -61,8 +48,8 @@
     cursor: pointer;
   }
 
-  .jobs-header > #jobs-header-statistics {
-    grid-area: statistics;
+  .header > .stats-container {
+    grid-area: stats;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,12 +59,12 @@
   }
 </style>
 
-<div class="jobs-header">
-  <h2>jobs</h2>
-  <div id="add-new">
-    <button on:click|stopPropagation|trusted|preventDefault={handleAddNewJob}>&#x0002B;</button>
+<div class="header">
+  <h2>{title}</h2>
+  <div class="button-container">
+    <button on:click|stopPropagation|trusted|preventDefault={onButtonClick}>&#x0002B;</button>
   </div>
-  <div id="jobs-header-statistics">
-    {jobsRunning}/{jobsTotal}
+  <div class="stats-container">
+    {stat}
   </div>
 </div>
