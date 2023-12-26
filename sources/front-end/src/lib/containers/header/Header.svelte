@@ -5,9 +5,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
 
-    height: 4rem;
+  header > h1 {
+    line-height: normal;
+    color: var(--theme-black);
   }
 </style>
 
-<header>header</header>
+<header>
+  <h1>binning</h1>
+</header>
