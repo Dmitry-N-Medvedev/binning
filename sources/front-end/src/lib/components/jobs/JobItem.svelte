@@ -33,14 +33,16 @@
 <style>
   .job-list-item {
     display: grid;
-    grid-template-columns: 3fr repeat(2, 1fr);
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
+    /* grid-template-rows: max-content; */
     grid-template-areas:
-      'job-statistics add-data binning-settings'
+      'job-statistics binning-settings'
+      'job-statistics add-data'
     ;
     gap: 0.25rem;
-    align-items: center;
-    min-height: 10rem;
+    /* align-items: center; */
+    /* min-height: 10rem; */
 
     background-color: var(--theme-black);
 
