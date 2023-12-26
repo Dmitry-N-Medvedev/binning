@@ -20,7 +20,7 @@
 </script>
 
 <style>
-  div {
+  .layout-root {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
@@ -57,7 +57,7 @@
   }
 </style>
 
-<div>
+<div class="layout-root">
   <Header />
   <main>
 	  <slot />
