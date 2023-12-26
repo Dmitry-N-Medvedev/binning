@@ -1,4 +1,6 @@
 <script>
+  import StatValueCtl from "./StatValueCtl.svelte";
+
   let {
     ctValue = 'N/A',
     recordsNum = 'N/A',
@@ -17,19 +19,33 @@
   }
 
   .value {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-variation-settings: "wght" 700;
-    font-size: 1.5rem;
-    line-height: 0;
-
+    aspect-ratio: 2 / 1;
   }
 </style>
 
 <div class="job-statistics-concise">
- <div class="value">{ctValue}</div> 
- <div class="value">{recordsNum}</div> 
- <div class="value">{rps}</div> 
- <div class="value">{executionTime}</div> 
+  <div class="value">
+    <StatValueCtl
+      value="{ctValue}"
+      hint="created at"
+    />
+  </div> 
+  <div class="value">
+    <StatValueCtl
+      value="{recordsNum}"
+      hint="num of records"
+    />
+  </div> 
+  <div class="value">
+    <StatValueCtl
+      value="{rps}"
+      hint="records/sec"
+    />
+  </div> 
+  <div class="value">
+    <StatValueCtl
+      value="{executionTime}"
+      hint="execution time"
+    />
+  </div> 
 </div>
