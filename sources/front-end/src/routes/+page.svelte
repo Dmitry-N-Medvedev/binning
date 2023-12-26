@@ -1,29 +1,44 @@
 <script>
   import {
     onMount,
+    onDestroy,
   } from 'svelte';
   import JobItem from '$lib/components/jobs/JobItem.svelte';
   import BinningSettings from '$lib/components/binning-settings/BinningSettings.svelte';
   import Statistics from '$lib/components/statistics/Statistics.svelte';
   import JobsListHeader from '$lib/components/jobs/JobsListHeader.svelte';
+  import { Jobs } from '$lib/stores/jobs.store.mjs';
 
   /**
    * @type Array<object>
    */
   let jobItems = $state([]);
+  let jobsTotal = $derived(jobItems.length);
+  let jobsRunning = 0;
+  /**
+   * @type {function}
+   */
+  let unsubscribeFromJobs;
 
   onMount(() => {
-    for (let i = 0; i < 15; i += 1) {
-      const item = {
-        id: self.crypto.randomUUID(),
-        creationTime: Date.now(),
-        recordsNum: Math.ceil(Math.random() * 1000 + 1045),
-        rps: Math.ceil(Math.random() * 10000 + 1045),
-        executionTime: Math.ceil(Math.random() * 60),
-      };
+    unsubscribeFromJobs = Jobs.subscribe((newState) => {
+      jobItems.length = 0;
+      newState.forEach((value, key) => {
+        const item = {
+          id: key,
+          creationTime: value.ct,
+          recordsNum: value.recordsNum,
+          rps: value.rps,
+          executionTime: value.executionTime,
+        };
 
-      jobItems.push(item);
-    }
+        jobItems.push(item);
+      });
+    });
+  });
+
+  onDestroy(() => {
+    unsubscribeFromJobs();
   });
 </script>
 
@@ -63,10 +78,8 @@
 
   #job-list-items {
     grid-area: job-list-items;
-    display: grid;
-    grid-template-columns: unset;
-    grid-template-rows: unset;
-    grid-auto-flow: row;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
 
     counter-reset: jli;
@@ -93,12 +106,12 @@
   <section id="section-jobs">
     <div id="job-list-header">
       <JobsListHeader 
-        jobsTotal={100}
-        jobsRunning={20}
+        {jobsTotal}
+        {jobsRunning}
       />
     </div>
     <div id="job-list-items">
-      {#each jobItems as jobItem (jobItem.id)}
+      {#each jobItems as jobItem(jobItem.id)}
         <JobItem
           jobItemId={jobItem.id}
           creationTime={jobItem.creationTime}

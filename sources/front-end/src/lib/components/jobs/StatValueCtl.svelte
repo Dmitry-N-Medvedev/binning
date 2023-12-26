@@ -39,6 +39,11 @@
     filter: opacity(0.0);
     height: 1.5rem;
     padding: 0.25rem;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .stat-value:hover {

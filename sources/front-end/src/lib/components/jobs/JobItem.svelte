@@ -3,6 +3,10 @@
     onMount,
   } from 'svelte';
   import JobStatistics from './JobStatistics.svelte';
+  import CrosshairIcon from '$lib/icons/crosshair.svelte';
+  import {
+    Jobs,
+  } from '$lib/stores/jobs.store.mjs';
 
   let {
     jobItemId = null,
@@ -25,6 +29,15 @@
 
   let selfId = $state();
 
+  /**
+   * 
+   * @param e {MouseEvent}
+   */
+  function killSelf(e) {
+    // @ts-ignore
+    Jobs.killJob(jobItemId);
+  }
+
   onMount(() => {
     selfId = self.crypto.randomUUID();
   });
@@ -33,16 +46,17 @@
 <style>
   .job-list-item {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 4fr repeat(2, 1fr);
     grid-template-rows: 1fr;
     /* grid-template-rows: max-content; */
     grid-template-areas:
-      'job-statistics binning-settings'
-      'job-statistics add-data'
+      'job-statistics binning-settings kill'
+      'job-statistics add-data kill'
     ;
     gap: 0.25rem;
     /* align-items: center; */
-    /* min-height: 10rem; */
+    max-height: 12rem;
+    min-height: 12rem;
 
     background-color: var(--theme-black);
 
@@ -50,13 +64,12 @@
     
   }
 
-  .job-statistics {
+  /* .job-statistics {
     grid-area: job-statistics;
     display: flex;
     justify-content: stretch;
     align-items: stretch;
-    height: 100%;
-  }
+  } */
 
   .add-data {
     grid-area: add-data;
@@ -75,6 +88,27 @@
 
     color: var(--theme-black);
     background-color: var(--theme-green);
+  }
+
+  .kill {
+    grid-area: kill;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .kill-button {
+    display: flex;
+    flex: 1 0 100%;
+    aspect-ratio: 1 / 1;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-variation-settings: "wght" 900, "opsz" 32;
+    background-color: var(--theme-black);
+    color: var(--theme-red);
+    border-radius: 0.25rem;
+    cursor: pointer;
   }
 
   .file-input:disabled + label {
@@ -100,14 +134,12 @@
 </style>
 
 <div id="{jobItemId}" class="job-list-item" class:isEnabled>
-  <div class="job-statistics">
     <JobStatistics
       ctValue={creationTimeToString(creationTime)}
       {recordsNum}
       {rps}
       {executionTime}
     />
-  </div>
   <div class="add-data">
     <input
       id="{selfId}"
@@ -120,4 +152,9 @@
     <label for="{selfId}">upload data</label>
   </div>
   <div class="binning-settings">binning settings</div>
+  <div class="kill">
+    <button class="kill-button" on:click|preventDefault|stopPropagation|trusted={killSelf}>
+      <CrosshairIcon />
+    </button>
+  </div>
 </div>
