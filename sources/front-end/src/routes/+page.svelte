@@ -92,7 +92,10 @@
 <article>
   <section id="section-jobs">
     <div id="job-list-header">
-      <JobsListHeader />
+      <JobsListHeader 
+        jobsTotal={100}
+        jobsRunning={20}
+      />
     </div>
     <div id="job-list-items">
       {#each jobItems as jobItem (jobItem.id)}
