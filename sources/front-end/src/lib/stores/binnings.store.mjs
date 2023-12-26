@@ -2,25 +2,29 @@ import {
   writable,
 } from 'svelte/store';
 
-const binningTypes = new Map();
-
 function createBinningSettingsStore() {
   const {
     subscribe,
     update,
-  } = writable(binningTypes);
+  } = writable(new Map());
 
   return {
     subscribe,
-    addType: (binningSettings = null) => {
+    /**
+     * 
+     * @param {object} binningSettings
+     */
+    newBinningSettings: (binningSettings = null) => {
       update((currentState) => {
         if (binningSettings === null) {
           return currentState;
-        }  
+        }
 
         binningSettings.id = crypto.randomUUID();
 
         currentState.set(binningSettings.id, binningSettings);
+
+        console.log(currentState);
 
         return currentState;
       });
@@ -28,4 +32,4 @@ function createBinningSettingsStore() {
   }
 }
 
-export const BinningTypes = createBinningSettingsStore();
+export const Binnings = createBinningSettingsStore();

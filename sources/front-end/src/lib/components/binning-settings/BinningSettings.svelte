@@ -1,8 +1,58 @@
 <script>
+  import {
+    onMount,
+    onDestroy,
+  } from 'svelte';
+  import {
+    Binnings,
+  } from '$lib/stores/binnings.store.mjs';
+  import HeaderWithButton from '../header-with-button/HeaderWithButton.svelte';
+
   let {
     settingsTotal = 0,
     settingsUsed = 0,
   } = $props();
+  let statString = $derived(`${settingsUsed}/${settingsTotal}`);
+  /**
+   * @type {function}
+   */
+  let unsubscribeFromBinnings;
+  let binnings = $state([]);
+
+  /**
+   * @param e {MouseEvent}
+   */
+  function newBinningSettings(e) {
+    const newBinning = {
+      binWidth: 0,
+    };
+    Binnings.newBinningSettings(newBinning);
+    console.log('newBinningSettings');
+  }
+
+  onMount(() => {
+    Binnings.newBinningSettings({
+      binWidth: 0,
+    });
+    unsubscribeFromBinnings = Binnings.subscribe((newState) => {
+      binnings.length = 0;
+
+      newState.forEach((value, key) => {
+        const binning = {
+          id: value.id,
+          binWidth: value.binWidth,
+        };
+
+        binnings.push(binning);
+      });
+
+      console.log(binnings);
+    });
+  });
+
+  onDestroy(() => {
+    unsubscribeFromBinnings();
+  });
 </script>
 
 <style>
@@ -60,12 +110,13 @@
   }
 </style>
 
-<div class="binning-settings-header">
-  <h2>settings</h2>
-  <div id="add-new">
-    <button on:click|stopPropagation|trusted|preventDefault={null}>&#x0002B;</button>
-  </div>
-  <div id="binning-settings-statistics">
-    {settingsUsed}/{settingsTotal}
-  </div>
+<HeaderWithButton
+  title="settings"
+  stat={statString}
+  onButtonClick={newBinningSettings}
+/>
+<div class="binning-settings-list-items">
+  {#each binnings as binning(binning.id)}
+    <div>{binning.binWidth}</div> 
+  {/each}
 </div>

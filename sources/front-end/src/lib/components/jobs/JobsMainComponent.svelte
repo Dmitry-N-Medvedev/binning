@@ -4,8 +4,8 @@
     onDestroy,
   } from 'svelte';
   import JobItem from '$lib/components/jobs/JobItem.svelte';
-  import JobsListHeader from '$lib/components/jobs/JobsListHeader.svelte';
   import { Jobs } from '$lib/stores/jobs.store.mjs';
+  import HeaderWithButton from '../header-with-button/HeaderWithButton.svelte';
 
   /**
    * @type Array<object>
@@ -17,6 +17,14 @@
    * @type {function}
    */
   let unsubscribeFromJobs;
+  let statString = $derived(`${jobsRunning}/${jobsTotal}`);
+
+  /**
+   * @param e {MouseEvent}
+   */
+  function createNewJob(e) {
+    Jobs.newJob();
+  }
 
   onMount(() => {
     unsubscribeFromJobs = Jobs.subscribe((newState) => {
@@ -58,21 +66,22 @@
   }
 </style>
 
-    <div id="job-list-header">
-      <JobsListHeader 
-        {jobsTotal}
-        {jobsRunning}
-      />
-    </div>
-    <div id="job-list-items">
-      {#each jobItems as jobItem(jobItem.id)}
-        <JobItem
-          jobItemId={jobItem.id}
-          creationTime={jobItem.creationTime}
-          recordsNum={jobItem.recordsNum}
-          rps={jobItem.rps}
-          executionTime={jobItem.executionTime}
-          isEnabled={true}
-        />
-      {/each}
-    </div>
+<div id="job-list-header">
+  <HeaderWithButton
+    title="settings"
+    stat={statString}
+    onButtonClick={createNewJob}
+  />
+</div>
+<div id="job-list-items">
+  {#each jobItems as jobItem(jobItem.id)}
+    <JobItem
+      jobItemId={jobItem.id}
+      creationTime={jobItem.creationTime}
+      recordsNum={jobItem.recordsNum}
+      rps={jobItem.rps}
+      executionTime={jobItem.executionTime}
+      isEnabled={true}
+    />
+  {/each}
+</div>
