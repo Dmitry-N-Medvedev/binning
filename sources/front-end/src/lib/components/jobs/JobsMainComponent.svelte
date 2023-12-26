@@ -68,7 +68,7 @@
 
 <div id="job-list-header">
   <HeaderWithButton
-    title="settings"
+    title="jobs"
     stat={statString}
     onButtonClick={createNewJob}
   />
