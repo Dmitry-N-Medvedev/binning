@@ -19,7 +19,7 @@
   }
 
   .value {
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 3 / 1;
   }
 </style>
 
