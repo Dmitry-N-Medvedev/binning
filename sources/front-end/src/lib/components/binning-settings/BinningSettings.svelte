@@ -9,16 +9,18 @@
   import HeaderWithButton from '$lib/components/header-with-button/HeaderWithButton.svelte';
   import BinningSettingsItem from '$lib/components/binning-settings/BinningSettingsItem.svelte';
 
-  let {
-    settingsTotal = 0,
-    settingsUsed = 0,
-  } = $props();
-  let statString = $derived(`${settingsUsed}/${settingsTotal}`);
+  // let {
+  //   settingsTotal = 0,
+  //   settingsUsed = 0,
+  // } = $props();
   /**
    * @type {function}
    */
   let unsubscribeFromBinnings;
   let binnings = $state([]);
+  let binningsUsed = 0;
+  let binningsTotal = $derived(binnings.length);
+  let statString = $derived(`${binningsUsed}/${binningsTotal}`);
 
   /**
    * @param e {MouseEvent}
@@ -28,7 +30,6 @@
       binWidth: 0,
     };
     Binnings.newBinningSettings(newBinning);
-    console.log('newBinningSettings');
   }
   
   onMount(() => {
@@ -46,8 +47,6 @@
 
         binnings.push(binning);
       });
-
-      console.log(binnings);
     });
   });
 
