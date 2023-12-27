@@ -29,6 +29,15 @@ function createBinningSettingsStore() {
         return currentState;
       });
     },
+    killBinningSettings: (id = null) => {
+      update((currentState) => {
+        console.log('killBinningSettings', id);
+
+        currentState.delete(id);
+
+        return currentState;
+      });
+    },
   }
 }
 

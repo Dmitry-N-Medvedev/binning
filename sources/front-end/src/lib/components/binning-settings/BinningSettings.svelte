@@ -6,7 +6,8 @@
   import {
     Binnings,
   } from '$lib/stores/binnings.store.mjs';
-  import HeaderWithButton from '../header-with-button/HeaderWithButton.svelte';
+  import HeaderWithButton from '$lib/components/header-with-button/HeaderWithButton.svelte';
+  import BinningSettingsItem from '$lib/components/binning-settings/BinningSettingsItem.svelte';
 
   let {
     settingsTotal = 0,
@@ -29,7 +30,7 @@
     Binnings.newBinningSettings(newBinning);
     console.log('newBinningSettings');
   }
-
+  
   onMount(() => {
     Binnings.newBinningSettings({
       binWidth: 0,
@@ -57,66 +58,31 @@
 
 <style>
   .binning-settings-header {
-    display: grid;
-    grid-template-columns: 5fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas:
-      'title add-new statistics'
-    ;
-    /* max-height: 8rem; */
-    /* padding: 0.25rem 1rem; */
-    background-color: var(--theme-blue);
+    grid-area: binning-settings-header;
   }
 
-  .binning-settings-header > h2 {
-    grid-area: title;
+  .binning-settings-list-items {
+    grid-area: binning-settings-items;
     display: flex;
-    justify-content: start;
-    align-items: center;
-    color: var(--main-background-color);
-    padding-left: 2rem;
-  }
-
-  .binning-settings-header > #add-new {
-    grid-area: add-new;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-  }
-
-  #add-new > button {
-    display: flex;
-    flex: 1 0 100%;
-    aspect-ratio: 1 / 1;
-    justify-content: center;
-    align-items: center;
-    font-size: 4rem;
-    font-variation-settings: "wght" 900, "opsz" 32;
+    flex-direction: column;
+    gap: 0.5rem;
+    counter-reset: jli;
+    overflow-y: auto;
     background-color: var(--theme-black);
-    color: var(--theme-white);
-    border-radius: 0.25rem;
-    cursor: pointer;
-  }
-
-  .binning-settings-header > #binning-settings-statistics {
-    grid-area: statistics;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-feature-settings: "frac";
-    font-variation-settings: "wght" 150, "opsz" 32;
-    font-size: 3rem;
   }
 </style>
 
-<HeaderWithButton
-  title="settings"
-  stat={statString}
-  onButtonClick={newBinningSettings}
-/>
+<div class="binning-settings-header">
+  <HeaderWithButton
+    title="settings"
+    stat={statString}
+    onButtonClick={newBinningSettings}
+  />
+</div>
 <div class="binning-settings-list-items">
   {#each binnings as binning(binning.id)}
-    <div>{binning.binWidth}</div> 
+    <BinningSettingsItem
+      {binning}
+    />
   {/each}
 </div>

@@ -41,6 +41,15 @@
 
   #section-binning-settings {
     grid-area: settings;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content;
+    grid-template-areas:
+      'binning-settings-header'
+      'binning-settings-items'
+    ;
+    gap: 0.5rem;
+    overflow: hidden;
   }
 
   #section-statistics {

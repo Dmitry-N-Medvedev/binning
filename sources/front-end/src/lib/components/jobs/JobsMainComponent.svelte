@@ -63,6 +63,8 @@
     counter-reset: jli;
 
     overflow-y: auto;
+
+    background-color: var(--theme-black);
   }
 </style>
 
