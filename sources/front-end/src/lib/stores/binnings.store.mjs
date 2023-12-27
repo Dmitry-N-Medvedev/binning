@@ -24,15 +24,11 @@ function createBinningSettingsStore() {
 
         currentState.set(binningSettings.id, binningSettings);
 
-        console.log(currentState);
-
         return currentState;
       });
     },
     killBinningSettings: (id = null) => {
       update((currentState) => {
-        console.log('killBinningSettings', id);
-
         currentState.delete(id);
 
         return currentState;
