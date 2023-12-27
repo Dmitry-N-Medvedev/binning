@@ -1,5 +1,8 @@
 <script>
   import {
+    onMount,
+  } from 'svelte';
+  import {
     Binnings,
   } from '$lib/stores/binnings.store.mjs';
   import CrosshairIcon from '$lib/icons/crosshair.svelte';
@@ -7,7 +10,8 @@
   let {
     binning = {},
   } = $props();
-
+  
+  let binWidthLocal = $state();
   /**
    * 
    * @param e {MouseEvent}
@@ -16,6 +20,19 @@
     // @ts-ignore
     Binnings.killBinningSettings(binning.id);
   }
+
+  /**
+   * @param e {Event}
+  */
+  function handleBinWidthChange(e) {
+    const { fieldName } = e.srcElement.dataset;
+
+    Binnings.updateBinningSettings(binning.id, fieldName, e.srcElement.value);
+  }
+
+  onMount(() => {
+    binWidthLocal = binning.binWidth;
+  });
 </script>
 
 <style>
@@ -39,8 +56,8 @@
 
   .binning-settings-properties {
     grid-area: properties;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-auto-flow: row;
     gap: 0.5rem;
     padding: 0.5rem;
   }
@@ -58,10 +75,21 @@
 
   .property-name {
     grid-area: property-name;
+    justify-content: start;
   }
 
   .property-value {
     grid-area: property-value;
+    justify-content: stretch;
+    font-size: 1.5rem;
+    text-align: center;
+    font-feature-settings: "frac", "tnum", "zero", "ss01";
+  }
+
+  .property-name,
+  .property-value {
+    display: flex;
+    align-items: center;
   }
 
   .binning-settings-kill {
@@ -91,11 +119,14 @@
   <div class="binning-settings-properties">
     <div class="binning-property">
       <div class="property-name">width</div>
-      <div class="property-value">{binning.binWidth}</div>
-    </div>
-    <div class="binning-property">
-      <div class="property-name">height</div>
-      <div class="property-value">{binning.binWidth}</div>
+      <input
+        type="text"
+        inputmode="decimal"
+        class="property-value"
+        value={binning.binWidth}
+        on:change={handleBinWidthChange}
+        data-field-name="binWidth"
+      />
     </div>
   </div>
   <div class="binning-settings-kill">

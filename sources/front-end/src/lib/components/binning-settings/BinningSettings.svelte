@@ -9,10 +9,6 @@
   import HeaderWithButton from '$lib/components/header-with-button/HeaderWithButton.svelte';
   import BinningSettingsItem from '$lib/components/binning-settings/BinningSettingsItem.svelte';
 
-  // let {
-  //   settingsTotal = 0,
-  //   settingsUsed = 0,
-  // } = $props();
   /**
    * @type {function}
    */
@@ -34,7 +30,7 @@
   
   onMount(() => {
     Binnings.newBinningSettings({
-      binWidth: 0,
+      binWidth: 0.0,
     });
     unsubscribeFromBinnings = Binnings.subscribe((newState) => {
       binnings.length = 0;
