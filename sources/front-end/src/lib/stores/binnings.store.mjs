@@ -34,6 +34,17 @@ function createBinningSettingsStore() {
         return currentState;
       });
     },
+    updateBinningSettings: (id = null, property = null, value = null) => {
+      update((currentState) => {
+        if (id === null || property === null) {
+          return currentState;
+        }
+
+        currentState.get(id)[property] = value;
+
+        return currentState;
+      });
+    },
   }
 }
 
