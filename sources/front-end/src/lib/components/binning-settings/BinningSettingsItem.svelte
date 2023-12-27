@@ -84,6 +84,9 @@
     font-size: 1.5rem;
     text-align: center;
     font-feature-settings: "frac", "tnum", "zero", "ss01";
+    background-color: var(--theme-black);
+    color: var(--theme-white);
+    font-size: 2rem;
   }
 
   .property-name,
@@ -118,8 +121,9 @@
   <div class="binning-settings-id">{binning.id}</div>
   <div class="binning-settings-properties">
     <div class="binning-property">
-      <div class="property-name">width</div>
+      <label for="binWidth:{binning.id}" class="property-name">width</label>
       <input
+        id="binWidth:{binning.id}"
         type="text"
         inputmode="decimal"
         class="property-value"

@@ -23,14 +23,15 @@
    */
   function newBinningSettings(e) {
     const newBinning = {
-      binWidth: 0,
+      // FIXME: take from env
+      binWidth: 0.5,
     };
     Binnings.newBinningSettings(newBinning);
   }
   
   onMount(() => {
     Binnings.newBinningSettings({
-      binWidth: 0.0,
+      binWidth: 0.5,
     });
     unsubscribeFromBinnings = Binnings.subscribe((newState) => {
       binnings.length = 0;
