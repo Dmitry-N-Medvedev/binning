@@ -4,6 +4,7 @@
   } from 'svelte';
   import JobStatistics from './JobStatistics.svelte';
   import CrosshairIcon from '$lib/icons/crosshair.svelte';
+  import UploadIcon from '$lib/icons/upload.svelte';
   import {
     Jobs,
   } from '$lib/stores/jobs.store.mjs';
@@ -48,28 +49,15 @@
     display: grid;
     grid-template-columns: 4fr repeat(2, 1fr);
     grid-template-rows: 1fr;
-    /* grid-template-rows: max-content; */
     grid-template-areas:
       'job-statistics binning-settings kill'
       'job-statistics add-data kill'
     ;
-    gap: 0.25rem;
-    /* align-items: center; */
-    max-height: 12rem;
-    min-height: 12rem;
-
+    gap: 0.5rem;
     background-color: var(--theme-black);
-
     padding: 0.5rem;
-    
+    border: 0.5rem solid var(--theme-green);
   }
-
-  /* .job-statistics {
-    grid-area: job-statistics;
-    display: flex;
-    justify-content: stretch;
-    align-items: stretch;
-  } */
 
   .add-data {
     grid-area: add-data;
@@ -80,12 +68,12 @@
   }
 
   .add-data > label {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
-    max-width: 80%;
-    text-align: center;
     cursor: pointer;
-
+    width: 100%;
     color: var(--theme-black);
     background-color: var(--theme-green);
   }
@@ -106,7 +94,7 @@
     font-size: 4rem;
     font-variation-settings: "wght" 900, "opsz" 32;
     background-color: var(--theme-black);
-    color: var(--theme-red);
+    color: var(--theme-green);
     border-radius: 0.25rem;
     cursor: pointer;
   }
@@ -125,7 +113,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
   }
 
   .isEnabled {
@@ -149,7 +136,9 @@
       disabled={!isEnabled}
       class="file-input"
     />
-    <label for="{selfId}">upload data</label>
+    <label for="{selfId}">
+      <UploadIcon />
+    </label>
   </div>
   <div class="binning-settings">binning settings</div>
   <div class="kill">

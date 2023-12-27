@@ -53,7 +53,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-feature-settings: "frac";
+    font-feature-settings: "frac", "tnum", "zero", "ss01";
     font-variation-settings: "wght" 150, "opsz" 32;
     font-size: 3rem;
   }
