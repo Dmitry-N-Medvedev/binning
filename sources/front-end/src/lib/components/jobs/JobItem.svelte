@@ -1,13 +1,14 @@
 <script>
-  import {
-    onMount,
-  } from 'svelte';
   import JobStatistics from './JobStatistics.svelte';
   import CrosshairIcon from '$lib/icons/crosshair.svelte';
   import UploadIcon from '$lib/icons/upload.svelte';
   import {
-    Jobs,
-  } from '$lib/stores/jobs.store.mjs';
+    JobStore,
+  } from '../../stores/jobsStore.svelte.js';
+  import {
+    BinningStore,
+  } from '../../stores/binningStore.svelte.js';
+  import DropDown from '$lib/components/drop-down/DropDown.svelte';
 
   let {
     jobItemId = null,
@@ -36,10 +37,10 @@
    */
   function killSelf(e) {
     // @ts-ignore
-    Jobs.killJob(jobItemId);
+    JobStore.deleteJob(jobItemId);
   }
 
-  onMount(() => {
+  $effect(() => {
     selfId = self.crypto.randomUUID();
   });
 </script>
@@ -108,8 +109,8 @@
     grid-area: binning-settings;
   }
 
-  .add-data,
-  .binning-settings {
+  .add-data
+  {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,7 +141,11 @@
       <UploadIcon />
     </label>
   </div>
-  <div class="binning-settings">binning settings</div>
+  <div class="binning-settings">
+    <DropDown
+      items={BinningStore.state}
+    />
+  </div>
   <div class="kill">
     <button class="kill-button" on:click|preventDefault|stopPropagation|trusted={killSelf}>
       <CrosshairIcon />

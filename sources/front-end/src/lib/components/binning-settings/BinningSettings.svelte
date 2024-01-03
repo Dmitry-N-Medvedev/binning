@@ -1,55 +1,26 @@
 <script>
   import {
-    onMount,
-    onDestroy,
-  } from 'svelte';
-  import {
-    Binnings,
-  } from '$lib/stores/binnings.store.mjs';
+    BinningStore,
+  } from '../../stores/binningStore.svelte.js';
   import HeaderWithButton from '$lib/components/header-with-button/HeaderWithButton.svelte';
   import BinningSettingsItem from '$lib/components/binning-settings/BinningSettingsItem.svelte';
 
-  /**
-   * @type {function}
-   */
-  let unsubscribeFromBinnings;
-  let binnings = $state([]);
   let binningsUsed = 0;
-  let binningsTotal = $derived(binnings.length);
+  let binningsTotal = $derived(BinningStore.state.size);
   let statString = $derived(`${binningsUsed}/${binningsTotal}`);
 
   /**
    * @param e {MouseEvent}
    */
-  function newBinningSettings(e) {
-    const newBinning = {
+  function createNewBinningSettings(e) {
+    const newBinningSettings = {
       // FIXME: take from env
-      binWidth: 0.5,
+      binWidth: Math.random(),
     };
-    Binnings.newBinningSettings(newBinning);
+
+    // @ts-ignore
+    BinningStore.newBinning(newBinningSettings);
   }
-  
-  onMount(() => {
-    Binnings.newBinningSettings({
-      binWidth: 0.5,
-    });
-    unsubscribeFromBinnings = Binnings.subscribe((newState) => {
-      binnings.length = 0;
-
-      newState.forEach((value, key) => {
-        const binning = {
-          id: value.id,
-          binWidth: value.binWidth,
-        };
-
-        binnings.push(binning);
-      });
-    });
-  });
-
-  onDestroy(() => {
-    unsubscribeFromBinnings();
-  });
 </script>
 
 <style>
@@ -72,11 +43,11 @@
   <HeaderWithButton
     title="settings"
     stat={statString}
-    onButtonClick={newBinningSettings}
+    onButtonClick={createNewBinningSettings}
   />
 </div>
 <div class="binning-settings-list-items">
-  {#each binnings as binning(binning.id)}
+  {#each BinningStore.state.values() as binning(binning.id)}
     <BinningSettingsItem
       {binning}
     />

@@ -1,38 +1,35 @@
 <script>
   import {
-    onMount,
-  } from 'svelte';
-  import {
-    Binnings,
-  } from '$lib/stores/binnings.store.mjs';
+    BinningStore,
+  } from '../../stores/binningStore.svelte.js';
   import CrosshairIcon from '$lib/icons/crosshair.svelte';
 
   let {
-    binning = {},
+    binning,
   } = $props();
   
-  let binWidthLocal = $state();
+  let binWidthLocal = $state(0);
   /**
    * 
    * @param e {MouseEvent}
    */
   function killSelf(e) {
     // @ts-ignore
-    Binnings.killBinningSettings(binning.id);
+    BinningStore.deleteBinning(binning.id);
   }
 
   /**
    * @param e {Event}
   */
   function handleBinWidthChange(e) {
-    const { fieldName } = e.srcElement.dataset;
+    const {
+      target: {
+        value,
+      }
+    } = e;
 
-    Binnings.updateBinningSettings(binning.id, fieldName, e.srcElement.value);
+    BinningStore.updateBinning(binning.id, 'binWidth', parseFloat(value));
   }
-
-  onMount(() => {
-    binWidthLocal = binning.binWidth;
-  });
 </script>
 
 <style>
@@ -129,7 +126,6 @@
         class="property-value"
         value={binning.binWidth}
         on:change={handleBinWidthChange}
-        data-field-name="binWidth"
       />
     </div>
   </div>
