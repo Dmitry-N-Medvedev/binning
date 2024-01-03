@@ -14,8 +14,7 @@
    */
   function createNewBinningSettings(e) {
     const newBinningSettings = {
-      // FIXME: take from env
-      binWidth: Math.random(),
+      binWidth: 0.0,
     };
 
     // @ts-ignore

@@ -41,12 +41,13 @@
 
   .drop-down:hover .drop-down-items {
     visibility: visible;
+    z-index: 1;
   }
 
   .drop-down-items {
     --padding: 0.5rem;
 
-    visibility: visible;
+    visibility: hidden;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;

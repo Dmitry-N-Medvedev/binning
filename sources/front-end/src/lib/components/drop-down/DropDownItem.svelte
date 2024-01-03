@@ -14,7 +14,7 @@
     // @ts-ignore
     onClick({
       id,
-      text: `${data.binWidth}/smth`,
+      text: `${data.binWidth}`,
     });
   }
 
