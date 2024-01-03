@@ -1,22 +1,8 @@
 <script>
 	import 'inter-ui/inter-variable.css';
-	import { env } from '$env/dynamic/public';
-	import { browser as IsInBrowser } from '$app/environment';
-	import { onMount, onDestroy } from 'svelte';
+	// import { env } from '$env/dynamic/public';
   import Header from '$lib/containers/header/Header.svelte';
   import Footer from '$lib/containers/footer/Footer.svelte';
-
-	onMount(async () => {
-		if (IsInBrowser === true) {
-			console.log('onMount');
-		}
-	});
-
-	onDestroy(async () => {
-		if (IsInBrowser === true) {
-			console.log('onDestroy');
-		}
-	});
 </script>
 
 <style>

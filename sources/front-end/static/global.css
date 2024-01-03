@@ -21,7 +21,7 @@
 
 * {
   box-sizing: border-box;
-  contain: content;
+  /* contain: content; */
   margin: 0;
   padding: 0;
 

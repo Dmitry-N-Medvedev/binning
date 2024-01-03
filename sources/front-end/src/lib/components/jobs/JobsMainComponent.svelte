@@ -1,51 +1,44 @@
 <script>
-  import {
-    onMount,
-    onDestroy,
-  } from 'svelte';
   import JobItem from '$lib/components/jobs/JobItem.svelte';
-  import { Jobs } from '$lib/stores/jobs.store.mjs';
+  import {
+    JobStore,
+  } from '../../stores/jobsStore.svelte.js';
   import HeaderWithButton from '../header-with-button/HeaderWithButton.svelte';
 
-  /**
-   * @type Array<object>
-   */
-  let jobItems = $state([]);
-  let jobsTotal = $derived(jobItems.length);
+  let jobsTotal = $derived(JobStore.state.size);
   let jobsRunning = 0;
   /**
    * @type {function}
    */
-  let unsubscribeFromJobs;
   let statString = $derived(`${jobsRunning}/${jobsTotal}`);
 
   /**
    * @param e {MouseEvent}
    */
   function createNewJob(e) {
-    Jobs.newJob();
+    JobStore.createNewJob();
   }
 
-  onMount(() => {
-    unsubscribeFromJobs = Jobs.subscribe((newState) => {
-      jobItems.length = 0;
-      newState.forEach((value, key) => {
-        const item = {
-          id: key,
-          creationTime: value.ct,
-          recordsNum: value.recordsNum,
-          rps: value.rps,
-          executionTime: value.executionTime,
-        };
+  // onMount(() => {
+  //   unsubscribeFromJobs = Jobs.subscribe((newState) => {
+  //     jobItems.length = 0;
+  //     newState.forEach((value, key) => {
+  //       const item = {
+  //         id: key,
+  //         creationTime: value.ct,
+  //         recordsNum: value.recordsNum,
+  //         rps: value.rps,
+  //         executionTime: value.executionTime,
+  //       };
 
-        jobItems.push(item);
-      });
-    });
-  });
+  //       jobItems.push(item);
+  //     });
+  //   });
+  // });
 
-  onDestroy(() => {
-    unsubscribeFromJobs();
-  });
+  // onDestroy(() => {
+  //   unsubscribeFromJobs();
+  // });
 </script>
 
 <style>
@@ -76,7 +69,7 @@
   />
 </div>
 <div id="job-list-items">
-  {#each jobItems as jobItem(jobItem.id)}
+  {#each JobStore.state.values() as jobItem(jobItem.id)}
     <JobItem
       jobItemId={jobItem.id}
       creationTime={jobItem.creationTime}
