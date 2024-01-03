@@ -9,6 +9,7 @@
   } = $props();
   
   let binWidthLocal = $state(0);
+  let isInputValueValid = $derived(binWidthLocal > 0.0);
   /**
    * 
    * @param e {MouseEvent}
@@ -28,12 +29,28 @@
       }
     } = e;
 
+    binWidthLocal = value;
+
+    if (isInputValueValid === false) {
+      return;
+    }
+
     BinningStore.updateBinning(binning.id, 'binWidth', parseFloat(value));
   }
+
+  $effect(() => {
+    console.log({ binning });
+  });
+
+  $effect(() => {
+    console.log({ isInputValueValid });
+  });
 </script>
 
 <style>
   .binning-settings-item {
+    --padding: 0.5rem;
+
     display: grid;
     grid-template-columns: 5fr 1fr;
     grid-template-rows: auto 1fr;
@@ -43,12 +60,16 @@
     ;
     gap: 0.5rem;
     background-color: var(--theme-black);
-    padding: 0.5rem;
-    border: 0.5rem solid var(--theme-green);
+    padding: var(--padding);
+    border: var(--padding) solid var(--theme-green);
   }
 
   .binning-settings-id {
     grid-area: binning-id;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 calc(var(--padding) * 2);
   }
 
   .binning-settings-properties {
@@ -84,6 +105,10 @@
     background-color: var(--theme-black);
     color: var(--theme-white);
     font-size: 2rem;
+  }
+
+  .property-value:invalid {
+    background-color: var(--theme-red);
   }
 
   .property-name,
@@ -125,6 +150,7 @@
         inputmode="decimal"
         class="property-value"
         value={binning.binWidth}
+        pattern="\d+\.\d+"
         on:change={handleBinWidthChange}
       />
     </div>
