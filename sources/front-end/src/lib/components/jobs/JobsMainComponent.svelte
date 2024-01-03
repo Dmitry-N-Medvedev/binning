@@ -8,7 +8,7 @@
   let jobsTotal = $derived(JobStore.state.size);
   let jobsRunning = 0;
   /**
-   * @type {function}
+   * @type {string}
    */
   let statString = $derived(`${jobsRunning}/${jobsTotal}`);
 
