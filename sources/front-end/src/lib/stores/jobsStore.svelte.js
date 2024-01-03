@@ -32,6 +32,30 @@ class JobStoreClass {
 
     this.state = newState;
   }
+
+  updateJob(jobId = null, args = {}) {
+    if (jobId === null) {
+      return;
+    }
+
+    if (Object.getOwnPropertyNames(args).length === 0) {
+      return;
+    }
+
+    const newState = structuredClone(this.state);
+
+    Object.getOwnPropertyNames(args).forEach((propertyName) => {
+      const propertyValue = args[propertyName];
+
+      newState.get(jobId)[propertyName] = propertyValue;
+
+      console.log(`added ${propertyName} = ${propertyValue} to ${jobId}`, newState.get(jobId));
+    });
+
+    this.state = newState;
+
+    console.log(`${this.constructor.name}.updateJob(${jobId})`, args);
+  }
 }
 
 export const JobStore = new JobStoreClass();
