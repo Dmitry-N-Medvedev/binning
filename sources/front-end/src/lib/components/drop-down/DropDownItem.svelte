@@ -31,7 +31,7 @@
     cursor: pointer;
 
     background-color: var(--theme-black);
-    border: none;
+    border: 0.25rem solid transparent;
     color: var(--theme-white);
     font-size: 2rem;
   }
@@ -39,6 +39,7 @@
   .drop-down-item:hover {
     background-color: var(--theme-green);
     color: var(--theme-black);
+    border-color: var(--theme-black);
   }
 
   .data-grid {
