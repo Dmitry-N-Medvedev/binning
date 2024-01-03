@@ -6,6 +6,10 @@
      * @type {Array<object>}
     */
     items,
+    /**
+     * @type {function}
+    */
+    onValueChanged,
   } = $props();
   let selectedValue = $state('N/A');
   let selectedBinId = $state('');
@@ -22,6 +26,10 @@
 
     selectedBinId = id;
     selectedValue = text;
+
+    console.log('handleDropDownItemClick', selectedValue);
+
+    onValueChanged(parseFloat(selectedValue));
   }
 </script>
 

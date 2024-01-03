@@ -17,6 +17,7 @@
     rps = 0,
     executionTime = 0,
     isEnabled = true,
+    onBinWidthChanged,
   } = $props();
   
   /**
@@ -38,6 +39,15 @@
   function killSelf(e) {
     // @ts-ignore
     JobStore.deleteJob(jobItemId);
+  }
+
+  function handleBinWidthChanged(binWidth) {
+    console.log('handleBinWidthChanged', binWidth, jobItemId);
+
+    onBinWidthChanged({
+      jobId: jobItemId,
+      binWidth,  
+    })
   }
 
   $effect(() => {
@@ -144,6 +154,7 @@
   <div class="binning-settings">
     <DropDown
       items={BinningStore.state}
+      onValueChanged={handleBinWidthChanged}
     />
   </div>
   <div class="kill">

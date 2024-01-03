@@ -19,26 +19,15 @@
     JobStore.createNewJob();
   }
 
-  // onMount(() => {
-  //   unsubscribeFromJobs = Jobs.subscribe((newState) => {
-  //     jobItems.length = 0;
-  //     newState.forEach((value, key) => {
-  //       const item = {
-  //         id: key,
-  //         creationTime: value.ct,
-  //         recordsNum: value.recordsNum,
-  //         rps: value.rps,
-  //         executionTime: value.executionTime,
-  //       };
+  function handleBinWidthChanged(e) {
+    const {
+      jobId,
+      binWidth,
+    } = e;
+    console.log('handleBinWidthChanged', jobId, binWidth);
 
-  //       jobItems.push(item);
-  //     });
-  //   });
-  // });
-
-  // onDestroy(() => {
-  //   unsubscribeFromJobs();
-  // });
+    JobStore.updateJob(jobId, { binWidth });
+  }
 </script>
 
 <style>
@@ -72,11 +61,12 @@
   {#each JobStore.state.values() as jobItem(jobItem.id)}
     <JobItem
       jobItemId={jobItem.id}
-      creationTime={jobItem.creationTime}
+      creationTime={jobItem.ct}
       recordsNum={jobItem.recordsNum}
       rps={jobItem.rps}
       executionTime={jobItem.executionTime}
       isEnabled={true}
+      onBinWidthChanged={handleBinWidthChanged}
     />
   {/each}
 </div>
