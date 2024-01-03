@@ -13,6 +13,7 @@ class BinningStoreClass {
     const newBinningSettings = structuredClone(binningSettings);
 
     newBinningSettings.id = crypto.randomUUID();
+    newBinningSettings.isValid = newBinningSettings.binWidth > 0.0;
 
     const newState = structuredClone(this.state);
 
@@ -45,6 +46,7 @@ class BinningStoreClass {
     const newState = structuredClone(this.state);
     
     newState.get(binningId)[binningPropertyName] = binningPropertyValue;
+    newState.get(binningId)['isValid'] = binningPropertyValue > 0.0;
 
     this.state = newState;
   }
